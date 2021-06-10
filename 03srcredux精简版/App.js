@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import Main from './components/mainpage'
-// const Count=lazy(()=>import('./components/count'))
+import Count from './components/count'
 export default class App extends Component {
   render() {
     return (
       <div>
-        <Main></Main>
+        <Count></Count>
       </div>
     )
   }
