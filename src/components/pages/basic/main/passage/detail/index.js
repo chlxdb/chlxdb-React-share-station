@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 
-export default class Main extends Component {
-
+export default class Detail extends Component {
     render() {
         return (
             <div>
-                app.papp
+                xiangq
             </div>
         )
     }
