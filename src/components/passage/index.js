@@ -10,8 +10,8 @@ import { Row, Col, Card } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 const { Meta } = Card;
 export default class Passage extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props)
         this.state = {
             passages: [],
         }
@@ -54,40 +54,41 @@ export default class Passage extends Component {
     }
     render() {
         return (
-            <div style={{ marginLeft: 50 }}>
-                {
-                    this.state.passages.map((element, id) => {
-                        return (
-                            <ul key={id}>
-                                <Row>
-                                    <Col span={7}>
-                                        <Link to="/basic/main/detail">
-                                            <Card
-                                                style={{ width: '70%' }}
-                                                cover={
-                                                    <img
-                                                        alt="example"
-                                                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                                    />
-                                                }
-                                                actions={[
-                                                    <EllipsisOutlined key="ellipsis" />,
-                                                ]}
-                                            >
-                                                <Meta
-                                                    title={element.title}
-                                                    description={element.time}
+            <div>
+                <Row style={{ marginLeft: 50 }}>
+                    {
+                        this.state.passages.map((element, id) => {
+                            return (
+
+
+                                <Col span={8} key={id} style={{ marginBottom: 30 }}>
+                                    <Link to="/basic/detail">
+                                        <Card
+                                            style={{ width: '70%' }}
+                                            cover={
+                                                <img
+                                                    alt="example"
+                                                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
                                                 />
-                                            </Card>
-                                        </Link>
-                                    </Col> </Row>
+                                            }
+                                            actions={[
+                                                <EllipsisOutlined key="ellipsis" />,
+                                            ]}
+                                        >
+                                            <Meta
+                                                title={element.title}
+                                                description={element.time}
+                                            />
+                                        </Card>
+                                    </Link>
+                                </Col>
 
-                            </ul>
-                        )
-                    })
-                }
 
+                            )
+                        })
+                    }
 
+                </Row>
                 <Pagination
                     defaultPageSize={6}
                     onChange={this.onChange}

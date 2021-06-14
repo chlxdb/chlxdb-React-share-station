@@ -9,8 +9,6 @@ const data = [
 export default class Detile extends Component {
     render() {
         const { id, title } = this.props.match.params
-
-
         const findResult = data.find((dataobj) => {
             return dataobj.id === id
         })

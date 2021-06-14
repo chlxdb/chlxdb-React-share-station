@@ -42,7 +42,6 @@ export default class Messages extends Component {
     }
     render() {
         const { messageArr } = this.state
-
         return (
             <div>
                 <ul>
