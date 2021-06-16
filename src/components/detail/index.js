@@ -18,23 +18,26 @@ export default class Detail extends Component {
 
     constructor(props) {
         super(props)
+
         this.state = {
-            passage: "",
-            commentlist: []
+            passage: '',
+            commentlist: [],
+
 
         }
-    }
-    componentDidMount() {
 
-        axios.get('http://121.4.187.232:8080/passage/passageResources?passageID=2', {
-            // params: {
-            //     pageNo: 1,
-            //     pageSize: 6
-            // }
+    }
+
+    componentDidMount() {
+        const { id } = this.props.match.params
+        axios.get('http://121.4.187.232:8080/passage/passageResources', {
+            params: {
+                passageID: id
+            }
         })
             .then(
                 response => {
-                    console.log(response.data[0])
+                    console.log(response.data, 111)
                     this.setState({ passage: response.data[0] })
                     this.setState({ commentlist: response.data[3] })
 
@@ -46,7 +49,9 @@ export default class Detail extends Component {
             alert("do not black")
         } else { console.log('onPressEnter:', e.target.value); }
     };
+
     render() {
+
         return (
             <div style={{ textAlign: 'center', marginLeft: 100, marginRight: 100 }}>
 
@@ -76,6 +81,7 @@ export default class Detail extends Component {
 
                     <Col span={5} style={{ backgroundColor: '#707b84', color: '#fff', height: 650, overflow: 'scroll' }}>
                         <h1 style={{ color: '#fff' }}>评论区</h1>
+
                         <Input placeholder="发表评论,按回车键确认" maxLength={30} onPressEnter={this.onPressEnter} />
                         <br></br>
                         <hr></hr>
