@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
+import { Link, Route } from 'react-router-dom'
 import "./index.css"
 import { Layout, Menu } from 'antd';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import Reason from '../reason'
+import Noticomment from '../noticomment'
+import Data from '../data'
 
 const { Content, Sider } = Layout;
 export default class Manage extends Component {
@@ -22,13 +26,19 @@ export default class Manage extends Component {
                         <div className="logo" />
                         <Menu mode="inline" defaultSelectedKeys={['4']} style={{ marginTop: 25 }} >
                             <Menu.Item key="1" icon={<UserOutlined />}>
-                                文章资源管理与发布
+                                <Link to="/manage/reason">
+                                    文章资源管理与发布
+                                </Link>
                             </Menu.Item>
                             <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                                公告与留言厅管理
+                                <Link to="/manage/noticomment">
+                                    公告与留言厅管理
+                                </Link>
                             </Menu.Item>
                             <Menu.Item key="3" icon={<UploadOutlined />}>
-                                实时数据监测
+                                <Link to="/manage/data">
+                                    实时数据监测
+                                </Link>
                             </Menu.Item>
 
                         </Menu>
@@ -39,7 +49,10 @@ export default class Manage extends Component {
                         </Menu>
                         <Content style={{ margin: '24px 16px 0', width: "100%", overflow: 'initial' }}>
                             <div style={{ padding: 24, minHeight: 650 }}>
-                                content
+                                <Route path="/manage/reason" component={Reason} />
+                                <Route path="/manage/noticomment" component={Noticomment} />
+                                <Route path="/manage/data" component={Data} />
+
                             </div>
                         </Content>
 

@@ -23,7 +23,7 @@ export default class Basic extends Component {
 
                 <div style={{ marginTop: 20 }}>
                     <Route path="/basic/main" component={Main} />
-                    <Route path="/basic/detail" component={Detail} />
+                    <Route path="/basic/detail/:id" component={Detail} />
                     <Redirect to="/basic/main" />
                 </div>
             </div >

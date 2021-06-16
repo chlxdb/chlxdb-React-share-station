@@ -26,7 +26,7 @@ export default class Passage extends Component {
         })
             .then(
                 response => {
-
+                    console.log(response.data)
                     this.setState({ passages: response.data.passageItem })
 
 
@@ -62,7 +62,8 @@ export default class Passage extends Component {
 
 
                                 <Col span={8} key={id} style={{ marginBottom: 30 }}>
-                                    <Link to="/basic/detail">
+                                    < Link to={`/basic/detail/${element.id}`}>
+                                        {/* <Link to="/basic/detail"> */}
                                         <Card
                                             style={{ width: '70%' }}
                                             cover={
