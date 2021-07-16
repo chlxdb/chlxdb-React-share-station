@@ -1,8 +1,8 @@
-
-
 import React, { Component } from 'react'
 import { Row, Col } from 'antd';
-import { Form, Input, Button, Checkbox, Tabs } from 'antd';
+import { Form, Input, Button, Tabs, message } from 'antd';
+import axios from 'axios';
+import { Link } from 'react-router-dom'
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 const { TabPane } = Tabs;
 
@@ -12,25 +12,54 @@ export default class Login2 extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            name: '',
+            password: '',
         }
     }
     LoginPass() {//验证并成功跳转
         console.log('验证中。。。', this.state.name, this.state.password)
 
-        this.props.history.push('/manage')
+        axios.post('http://121.4.187.232:8080/user/userLogin?password=' + this.state.password + '&username=' + this.state.name, {
+            params: {
+
+            }
+        })
+            .then(
+                response => {
+                    // console.log(response)
+                    if (response.data.msg === "username is null") {
+                        message.error('用户名或密码错误,请重新登录!')
+                        console.log(response)
+                    } else if (response.data.msg === null) {
+                        message.error('用户名或密码错误,请重新登录!')
+                        console.log(response)
+
+                    }
+                    else {
+                        console.log(response.data)
+                        sessionStorage.setItem("token1", response.data.token)
+                        sessionStorage.setItem("userid", response.data.userID)
+                        message.success('登录成功')
+                        this.props.history.push('/basic/main')
+                    }
+                }
+            )
+
+
 
     }
 
+
     onFinish = (values) => {
         console.log('Success:', values);
+        this.setState({ password: values.password })
+        this.setState({ name: values.username })
         this.LoginPass()
 
     };
     callback = (key) => {
         console.log(key);
     }
-
-
     render() {
         return (
             <div style={{ backgroundColor: "#adc6ff", height: "720px", }}>
@@ -39,7 +68,6 @@ export default class Login2 extends Component {
                         <Tabs onChange={this.callback} type="card" style={{ width: '100%', marginTop: "150px ", backgroundColor: "white" }}>
                             <TabPane tab="用户登录" key=" 1">
                                 <div style={{ margin: '25px' }}>
-
                                     <Form
                                         name="normal_login"
                                         className="login-form"
@@ -55,6 +83,11 @@ export default class Login2 extends Component {
                                                     required: true,
                                                     message: 'Please input your Username!',
                                                 },
+
+                                                {
+                                                    pattern: /^[^\s]*$/,
+                                                    message: '禁止输入空格',
+                                                },
                                             ]}
                                         >
                                             <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
@@ -66,6 +99,11 @@ export default class Login2 extends Component {
                                                     required: true,
                                                     message: 'Please input your Password!',
                                                 },
+
+                                                {
+                                                    pattern: /^[^\s]*$/,
+                                                    message: '禁止输入空格',
+                                                },
                                             ]}
                                         >
                                             <Input
@@ -74,111 +112,33 @@ export default class Login2 extends Component {
                                                 placeholder="Password"
                                             />
                                         </Form.Item>
-                                        <Form.Item>
-                                            <Form.Item name="remember" valuePropName="checked" noStyle>
-                                                <Checkbox>Remember me</Checkbox>
-                                            </Form.Item>
-
-                                            {/* <a className="login-form-forgot" href="">
-                                    Forgot password
-                                </a> */}
-                                        </Form.Item>
 
                                         <Form.Item>
-                                            <Button type="primary" htmlType="submit" className="login-form-button">
+                                            <Button type="primary" htmlType="submit"  >
                                                 Log in
                                             </Button>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <Link to='/login2_2'>
+                                                <span type="primary">前往注册</span>
 
-                                        </Form.Item>
-                                    </Form>
-                                </div>
+                                            </Link>
+                                            &nbsp;&nbsp;&nbsp;
 
-                            </TabPane>
-
-
-
-
-                            <TabPane tab="用户注册" key="2">
-                                <div style={{ margin: '25px' }}>
-                                    <Form
-                                        name="register"
-                                        onFinish={this.onFinish}
-                                        scrollToFirstError
-                                    >
-
-                                        <Form.Item
-                                            name="username"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Please input your Username!',
-                                                },
-                                            ]}
-                                        >
-                                            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-                                        </Form.Item>
-                                        <Form.Item
-                                            name="password"
-
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Please input your password!',
-                                                },
-                                            ]}
-                                            hasFeedback
-                                        >
-                                            <Input
-                                                prefix={<LockOutlined className="site-form-item-icon" />}
-                                                type="password"
-                                                placeholder="Password"
-                                            />
-                                        </Form.Item>
-
-                                        <Form.Item
-                                            name="confirm"
-
-                                            dependencies={['password']}
-                                            hasFeedback
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Please confirm your password!',
-                                                },
-                                                ({ getFieldValue }) => ({
-                                                    validator(_, value) {
-                                                        if (!value || getFieldValue('password') === value) {
-                                                            return Promise.resolve();
-                                                        }
-
-                                                        return Promise.reject(new Error('The two passwords that you entered do not match!'));
-                                                    },
-                                                }),
-                                            ]}
-                                        >
-                                            <Input
-                                                prefix={<LockOutlined className="site-form-item-icon" />}
-                                                type="password"
-                                                placeholder="Confirm Password"
-                                            />
                                         </Form.Item>
                                         <Form.Item>
-                                            <Button type="primary" htmlType="submit" className="login-form-button">
-                                                register now!
-                                            </Button>
-
+                                            <Link to='/basic'>
+                                                <span style={{ fontSize: 18 }}>回到首页</span>
+                                            </Link>
                                         </Form.Item>
                                     </Form>
 
                                 </div>
                             </TabPane>
+
 
                         </Tabs>,
                     </Col>
-
                 </Row>
-
-
             </div >
         )
     }

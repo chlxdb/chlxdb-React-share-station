@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import './notice.css'
 export default class Notice extends Component {
 
     constructor(props) {
@@ -20,7 +21,7 @@ export default class Notice extends Component {
     }
     render() {
         return (
-            <div style={{ marginLeft: 50 }}>
+            <div style={{ marginLeft: 50, color: 'red', wordWrap: 'break-word ' }}>
                 {this.state.notice}
             </div>
         )
